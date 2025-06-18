@@ -16,8 +16,8 @@ steps:
       - -c
       - |
         gcloud container clusters get-credentials booking-cluster --zone asia-southeast1-a --project bookingfilm-463218
-        kubectl apply -f k8s/user-deployment.yml
-        kubectl apply -f k8s/user-service.yml
+        kubectl apply -f k8s/user-deployment.yaml
+        kubectl apply -f k8s/user-service.yaml
         kubectl set image deployment/user-deployment user=gcr.io/bookingfilm-463218/user-service:$SHORT_SHA -n booking-system
 
 images:
