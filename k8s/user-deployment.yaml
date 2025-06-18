@@ -17,7 +17,7 @@ spec:
         - name: user
           image: gcr.io/bookingfilm-463218/user-service
           ports:
-            - containerPort: 8080
+            - containerPort: 8084
           env:
             - name: DB_HOST
               valueFrom:
