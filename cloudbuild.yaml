@@ -1,0 +1,27 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'gcr.io/bookingfilm-463218/user-service:$SHORT_SHA',
+      '.'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/bookingfilm-463218/user-service:$SHORT_SHA']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
+    args:
+      - -c
+      - |
+        gcloud container clusters get-credentials booking-cluster --zone asia-southeast1-a --project bookingfilm-463218
+        kubectl apply -f k8s/user-deployment.yml
+        kubectl apply -f k8s/user-service.yml
+        kubectl set image deployment/user-deployment user=gcr.io/bookingfilm-463218/user-service:$SHORT_SHA -n booking-system
+
+images:
+  - gcr.io/bookingfilm-463218/user-service
+
+options:
+  logging: CLOUD_LOGGING_ONLY
