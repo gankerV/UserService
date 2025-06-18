@@ -4,7 +4,7 @@ metadata:
   name: user-service
   namespace: booking-system
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: user
   ports:
